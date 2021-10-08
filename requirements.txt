@@ -29,5 +29,5 @@ turfpy
 uszipcode
 xgboost
 yellowbrick
-smart_open
+smart_open[s3]
 pandas
