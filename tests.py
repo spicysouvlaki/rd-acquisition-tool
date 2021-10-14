@@ -9,6 +9,7 @@ from folium import Marker
 from folium.plugins import MarkerCluster
 import json
 from geomapping import TractMapper
+import download_file
 
 # use this: https://jingwen-z.github.io/how-to-draw-a-variety-of-maps-with-folium-in-python/
 
@@ -107,6 +108,7 @@ def main():
     st.header("Red Dot Cluster Analysis Tool")
     st.text("")
     st.markdown('<p class="big-font"> Use this to visualize and analyze clusters at a neighborhood level </p>', unsafe_allow_html=True)
+    st.write("[Link](https://app.powerbi.com/groups/b66220e0-ddcd-41a2-9dd8-5e489b4d3cd5/reports/a18b35ba-57d6-4dd6-bbad-85ed5146c9a8/ReportSectioned58b55d2641de7e8134) to the Power BI dashboard")
     st.text("")
     st.markdown('<p class="big-font"> <b> Enter an address, city, or town name below </b> </p>', unsafe_allow_html=True)
 
@@ -130,5 +132,7 @@ def main():
     st.text("")
     df = tmapper.compare_demographics()
     st.dataframe(df)
+    st.markdown(download_file.get_table_download_link(df), unsafe_allow_html=True)
+
 
 main()
