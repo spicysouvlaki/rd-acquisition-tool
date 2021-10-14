@@ -132,7 +132,14 @@ def main():
     st.text("")
     df = tmapper.compare_demographics()
     st.dataframe(df)
-    st.markdown(download_file.get_table_download_link(df), unsafe_allow_html=True)
+    # st.markdown(download_file.get_table_download_link(df), unsafe_allow_html=True)
+    download_button_str = download_file.download_button(
+        df,
+        f'{address}_data.csv',
+        'Download data',
+        pickle_it=False
+    )
 
+    st.markdown(download_button_str, unsafe_allow_html=True)
 
 main()
