@@ -32,6 +32,3 @@ yellowbrick
 smart_open[s3]
 pandas
 branca==0.3.1
-xlsxwriter
-uuid
-re

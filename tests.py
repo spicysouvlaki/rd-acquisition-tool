@@ -9,7 +9,7 @@ from folium import Marker
 from folium.plugins import MarkerCluster
 import json
 from geomapping import TractMapper
-import download_file
+# import download_file
 
 # use this: https://jingwen-z.github.io/how-to-draw-a-variety-of-maps-with-folium-in-python/
 
@@ -133,13 +133,13 @@ def main():
     df = tmapper.compare_demographics()
     st.dataframe(df)
     # st.markdown(download_file.get_table_download_link(df), unsafe_allow_html=True)
-    download_button_str = download_file.download_button(
-        df,
-        f'{address}_data.csv',
-        'Download data',
-        pickle_it=False
-    )
-
-    st.markdown(download_button_str, unsafe_allow_html=True)
+    # download_button_str = download_file.download_button(
+    #     df,
+    #     f'{address}_data.csv',
+    #     'Download data',
+    #     pickle_it=False
+    # )
+    #
+    # st.markdown(download_button_str, unsafe_allow_html=True)
 
 main()
