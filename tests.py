@@ -69,7 +69,8 @@ def display_map(tmapper=None, yes=False, lat=None, long=None, n=None, tile='Stam
                      'cluster 2 probability',
                      'cluster 3 probability',
                      'cluster 4 probability',
-                     'cluster 5 probability', 'crimes per sq. mile', 'per capita income', 'pop. change'],
+                     'cluster 5 probability', 'crimes per sq. mile',
+                     'per capita income', 'pop. change', 'most similar RD stores'],
             localize=True
         )).add_to(m)
 
