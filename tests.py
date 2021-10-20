@@ -122,16 +122,16 @@ def main():
 
     #Call the display_map function by passing coordinates, dataframe and geoJSON file
     st.text("")
-    col0, col1, col2, col3, col4, col5 = st.columns(6)
-    with col0:
-        st.write("")
-    col1.metric("Crime", "3.7", "1.2 %")
-    col2.metric("Education", "-2.1", "-8 %")
-    col3.metric("Life Change", "1.0", "0.6 %")
-    col4.metric("SEO", "10 %", "50 %")
-    with col5:
-        st.write("")
-    st.text("")
+    # col0, col1, col2, col3, col4, col5 = st.columns(6)
+    # with col0:
+    #     st.write("")
+    # col1.metric("Crime", "3.7", "1.2 %")
+    # col2.metric("Education", "-2.1", "-8 %")
+    # col3.metric("Life Change", "1.0", "0.6 %")
+    # col4.metric("SEO", "10 %", "50 %")
+    # with col5:
+    #     st.write("")
+    # st.text("")
 
     if 'lat' in coordinates:
         display_map(tmapper, True, coordinates['lat'], coordinates['long'], N)
