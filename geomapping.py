@@ -22,19 +22,22 @@ class TractMapper:
         BUCKET = 'neighborhoodscout'
         DEM_FILE = 'all_tracts_and_demographics.csv'
         GEO_FILE = 'full_new.geojson'
+        RD_DEM_FILE = 'rd_demographics.csv'
 
         aws_key = st.secrets['AWS_ACCESS_KEY_ID']
         aws_secret = st.secrets['AWS_SECRET_ACCESS_KEY']
 
         dem_path = 's3://{}:{}@{}/{}'.format(aws_key, aws_secret, BUCKET, DEM_FILE)
         geo_path = 's3://{}:{}@{}/{}'.format(aws_key, aws_secret, BUCKET, GEO_FILE)
+        rd_dem_path = 's3://{}:{}@{}/{}'.format(aws_key, aws_secret, BUCKET, RD_DEM_FILE)
 
         self.data = gpd.read_file(smart_open.smart_open(geo_path))
         self.data.to_crs(pyproj.CRS.from_epsg(4326), inplace=True)
 
         # self.dem_data = pd.read_csv('data/all_tracts_and_demographics.csv').drop('Unnamed: 0', axis=1).rename(columns={'request': 'zoneid'})
         self.dem_data = pd.read_csv(smart_open.smart_open(dem_path)).drop('Unnamed: 0', axis=1).rename(columns={'request': 'zoneid'})
-        self.composite_df = pd.read_csv('composite_variables.csv')
+        self.composite_df = pd.read_csv('composite_variables1.csv')
+        self.rd_dem_data = pd.read_csv(smart_open.smart_open(rd_dem_path)).drop('Unnamed: 0', axis=1)
 
         self.btree = BallTree(np.deg2rad(self.data[['latitude', 'longitude']]))
 
@@ -58,7 +61,8 @@ class TractMapper:
 
         data = pd.DataFrame({
             'current neighborhoods': merged.mean().values,
-            'national avg': other.mean().values
+            'RD neighborhood avg': self.rd_dem_data.mean().values,
+            'national avg': other.mean().values,
         })
 
         data.index = DEM_COL_NAMES
