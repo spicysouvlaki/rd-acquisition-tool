@@ -2,7 +2,10 @@ from geopy.geocoders import Nominatim
 
 
 def parse_address_string(addy):
-    locator = Nominatim(user_agent="acq_app")
+    try:
+        locator = Nominatim(user_agent="my_rd_app")
+    except:
+        locator = Nominatim(user_agent='application')
     location = locator.geocode(addy)
 
     try:
