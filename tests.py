@@ -13,6 +13,7 @@ from geomapping import TractMapper
 
 # use this: https://jingwen-z.github.io/how-to-draw-a-variety-of-maps-with-folium-in-python/
 
+st.set_page_config(layout='centered', page_icon='🔎')
 
 @st.cache(allow_output_mutation=True)
 def get_data():
