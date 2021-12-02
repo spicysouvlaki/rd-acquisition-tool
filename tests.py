@@ -116,7 +116,7 @@ def main():
     st.text("")
     st.markdown('<p class="big-font"> <b> Enter an address, city, or town name below </b> </p>', unsafe_allow_html=True)
 
-    N = st.slider("How many neighborhoods do you want to see?", 1, 30, 15)
+    N = st.slider("How many neighborhoods do you want to see?", 1, 100, 15, 5)
     address = st.text_input("Enter address or city", "Pine Bluff, Arkansas")
 
     # Use the convert_address function to convert address to coordinates
