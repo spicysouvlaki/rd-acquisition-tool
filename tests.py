@@ -192,7 +192,7 @@ def main():
         blank()
         if show_competitors:
             st.markdown("Competitor Data")
-            display_comp_df = cdf[['lat_location', 'long_location', 'name', 'rating', 'num_ratings', 'address']]
+            display_comp_df = cdf[['name', 'address', 'rating', 'num_ratings', 'lat_location', 'long_location']]
             st.download_button(
                 label='Download data',
                 data=convert_df(display_comp_df),
