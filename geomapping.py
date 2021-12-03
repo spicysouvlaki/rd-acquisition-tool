@@ -32,6 +32,7 @@ class TractMapper:
         rd_dem_path = 's3://{}:{}@{}/{}'.format(aws_key, aws_secret, BUCKET, RD_DEM_FILE)
 
         self.data = gpd.read_file(smart_open.smart_open(geo_path))
+        self.data = self.data.drop_duplicates()
         self.data.to_crs(pyproj.CRS.from_epsg(4326), inplace=True)
 
         # self.dem_data = pd.read_csv('data/all_tracts_and_demographics.csv').drop('Unnamed: 0', axis=1).rename(columns={'request': 'zoneid'})
