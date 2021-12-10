@@ -151,7 +151,7 @@ def main():
         st.markdown('<p class="big-font"> <b> Enter an address, city, or town name below </b> </p>', unsafe_allow_html=True)
         address = st.text_input("Enter address or city", "Pine Bluff, Arkansas")
         N = st.slider("How many neighborhoods do you want to see?", 1, 100, 15, 5)
-        show_competitors = st.checkbox("show self-storage supply", value=False, help='Use sparingly!')
+        show_competitors = st.checkbox("show self-storage supply", value=False, help='Use sparingly – costs $0.032 per call')
         blank()
         submit_button = st.form_submit_button(label='Search')
 
