@@ -7,7 +7,7 @@ import googlemaps
 import geopy.distance
 import streamlit as st
 
-API_KEY = st.secrets['GMAPS_KEY']
+API_KEY = st.secrets['DAVE_KEY']
 
 def make_request(lat, long, pagetoken=None, search='self storage', key=API_KEY, radius='8000'):
 

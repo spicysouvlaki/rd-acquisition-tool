@@ -20,7 +20,6 @@ pip-chill
 pipwin
 plotly-express
 pony
-psycopg2
 rtree
 scikit-posthocs
 sklearn
