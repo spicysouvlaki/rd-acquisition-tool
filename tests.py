@@ -148,10 +148,17 @@ def main():
     st.write("[Link](https://app.powerbi.com/groups/b66220e0-ddcd-41a2-9dd8-5e489b4d3cd5/reports/a18b35ba-57d6-4dd6-bbad-85ed5146c9a8/ReportSectioned58b55d2641de7e8134) to the Power BI dashboard")
     st.text("")
     with st.form(key='form'):
-        st.markdown('<p class="big-font"> <b> Enter an address, city, or town name below </b> </p>', unsafe_allow_html=True)
+        st.markdown('<p class="big-font"> <b> Location </b> </p>', unsafe_allow_html=True)
         address = st.text_input("Enter address or city", "Pine Bluff, Arkansas")
-        N = st.slider("How many neighborhoods do you want to see?", 1, 100, 15, 5)
-        show_competitors = st.checkbox("show self-storage supply", value=False, help='Use sparingly – costs $0.032 per call')
+        N = st.slider("How many neighborhoods do you want to see?", 1, 100, 15, 5) 
+        st.markdown('<p class="big-font"> <b> Self-storage supply </b> </p>', unsafe_allow_html=True) 
+        comp_show = st.radio('Which level of self-storage supply to plot?', 
+                 ("Local", "All", "None"), 
+                 index=2,  
+                 help="Local is the immediate surrounding area (5 mi) // All is wider (30 mi) area"
+                )
+        
+#        show_competitors = st.checkbox("show self-storage supply", value=False, help='Use sparingly – costs $0.032 per call') 
         blank()
         submit_button = st.form_submit_button(label='Search')
 
@@ -173,34 +180,55 @@ def main():
         # with col5:
         #     st.write("")
         # st.text("")
-
+        
+        comp_plotted = True   
+        
+        st.markdown("**Map**")
         if 'lat' in coordinates:
-            if show_competitors:
-                dat = gmaps.get_competitor_meta(coordinates['lat'], coordinates['long'])
-                cdf = dat['full'].copy()
+            if comp_show == 'Local': # if show_competitors:
+#                dat = gmaps.get_competitor_meta(coordinates['lat'], coordinates['long'])
+#                cdf = dat['full'].copy() 
+                
+                cdf = gmaps.get_competitors(coordinates['lat'], coordinates['long'], radius='8000') 
+                display_map(tmapper, True, coordinates['lat'], coordinates['long'], N, comps=True, comp_df=cdf)  
+            elif comp_show == 'All': 
+                # make call at 5, 15, 25 mile radius then drop dups  
+                fivemile = gmaps.get_competitors(coordinates['lat'], coordinates['long'], radius='8000')
+                fifteenmile = gmaps.get_competitors(coordinates['lat'], coordinates['long'], radius='24150')
+                twentyfivemile = gmaps.get_competitors(coordinates['lat'], coordinates['long'], radius='40250') 
+                
+                cdf = pd.concat([fivemile, fifteenmile, twentyfivemile], axis=0)
+                
                 display_map(tmapper, True, coordinates['lat'], coordinates['long'], N, comps=True, comp_df=cdf)
-            else:
+                
+            else: 
+                comp_plotted = False
                 display_map(tmapper, True, coordinates['lat'], coordinates['long'], N)
         else:
-            display_map()
+            display_map() 
+        
+        st.markdown('-----')
 
         st.text("")
-        st.markdown("Demographic Data")
+        st.markdown("**Demographic Data**")
         st.text("")
-        df = tmapper.compare_demographics()
-        st.dataframe(df)
-        blank()
-        if show_competitors:
-            st.markdown("Competitor Data")
+        df = tmapper.compare_demographics() 
+        st.dataframe(df) 
+        blank() 
+        st.markdown('------')
+        if comp_plotted: # if show_competitors:
+            st.markdown("**Competitor Data**")
             display_comp_df = cdf[['name', 'address', 'rating', 'num_ratings', 'lat_location', 'long_location']]
-            display_comp_df = display_comp_df.drop_duplicates()
+            display_comp_df = display_comp_df.drop_duplicates().reset_index(drop=True).round(2)
+            st.markdown(f"**{display_comp_df.shape[0]}** results found") 
             st.download_button(
                 label='Download data',
                 data=convert_df(display_comp_df),
                 file_name=f"{str(address).replace(' ', '-')}_competitors.csv",
                 mime='text/csv'
-            )
-            st.dataframe(display_comp_df)
+            ) 
+            st.dataframe(display_comp_df) 
+            
         # st.markdown(download_file.get_table_download_link(df), unsafe_allow_html=True)
         # download_button_str = download_file.download_button(
         #     df,

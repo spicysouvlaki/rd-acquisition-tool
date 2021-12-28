@@ -79,9 +79,9 @@ def parse_results(data):
         'address': address
     })
 
-def get_competitors(lat, long, key=API_KEY):
+def get_competitors(lat, long, key=API_KEY, radius='8000'):
 
-    request_output = make_request(lat=lat, long=long, key=key)
+    request_output = make_request(lat=lat, long=long, key=key, radius=radius)
     data, url = request_output['data'], request_output['url']
 
     output = []
