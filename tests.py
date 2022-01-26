@@ -150,7 +150,7 @@ def main():
     with st.form(key='form'):
         st.markdown('<p class="big-font"> <b> Location </b> </p>', unsafe_allow_html=True)
         address = st.text_input("Enter address or city", "Pine Bluff, Arkansas")
-        N = st.slider("How many neighborhoods do you want to see?", 1, 750, 15, 5) 
+        N = st.slider("How many neighborhoods do you want to see?", 1, 450, 15, 5) 
         st.markdown('<p class="big-font"> <b> Self-storage supply </b> </p>', unsafe_allow_html=True) 
         comp_show = st.radio('Which level of self-storage supply to plot?', 
                  ("Local", "All", "None"), 
