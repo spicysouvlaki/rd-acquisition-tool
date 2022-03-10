@@ -14,7 +14,16 @@ import gmaps
 
 # use this: https://jingwen-z.github.io/how-to-draw-a-variety-of-maps-with-folium-in-python/
 
-st.set_page_config(layout='centered', page_icon='🔎')
+st.set_page_config(layout='centered', page_icon='🔎') 
+
+def is_lat_long(s, T=.5): 
+    
+    ss = [x.isdigit() for x in s] 
+    
+    if ss.count(True) / len(ss) >= T: 
+        return True 
+    else: 
+        return False
 
 def blank(): return st.text("")
 
@@ -149,7 +158,7 @@ def main():
     st.text("")
     with st.form(key='form'):
         st.markdown('<p class="big-font"> <b> Location </b> </p>', unsafe_allow_html=True)
-        address = st.text_input("Enter address or city", "Pine Bluff, Arkansas")
+        address = st.text_input("Enter address or lat, long coordinates", "Pine Bluff, Arkansas")
         N = st.slider("How many neighborhoods do you want to see?", 1, 450, 15, 5) 
         st.markdown('<p class="big-font"> <b> Self-storage supply </b> </p>', unsafe_allow_html=True) 
         comp_show = st.radio('Which level of self-storage supply to plot?', 
@@ -163,8 +172,15 @@ def main():
         submit_button = st.form_submit_button(label='Search')
 
     if submit_button:
-        # Use the convert_address function to convert address to coordinates
-        coordinates = parse_address_string(address)
+        # Use the convert_address function to convert address to coordinates 
+        
+        if is_lat_long(address): 
+            lt, lg = tuple(address.split(',')) 
+            lt, lg = float(lt.strip()), float(lg.strip())  
+            
+            coordinates = {'lat': lt, 'long': lg}
+        else:   
+            coordinates = parse_address_string(address)
 
         tmapper = get_data()
 

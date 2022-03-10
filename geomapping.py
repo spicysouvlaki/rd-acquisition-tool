@@ -25,7 +25,7 @@ class TractMapper:
         RD_DEM_FILE = 'rd_demographics.csv'
 
         aws_key = st.secrets['AWS_ACCESS_KEY_ID']
-        aws_secret = st.secrets['AWS_SECRET_ACCESS_KEY']
+        aws_secret = st.secrets['AWS_SECRET_ACCESS_KEY'] 
 
         dem_path = 's3://{}:{}@{}/{}'.format(aws_key, aws_secret, BUCKET, DEM_FILE)
         geo_path = 's3://{}:{}@{}/{}'.format(aws_key, aws_secret, BUCKET, GEO_FILE)
