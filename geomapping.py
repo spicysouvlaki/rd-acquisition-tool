@@ -68,8 +68,13 @@ class TractMapper:
 
         data.index = DEM_COL_NAMES
         f = {k:'{:.2f}' for k in data.columns}
-
         if sort == 'max':
-            return data.round(2).style.highlight_max(axis=1, color='#CCCCFF').format(f)
+            return data.round(2)
         else:
-            return data.round(2).style.highlight_min(axis=1, color='#CCCCFF').format(f)
+            return data.round(2)
+        
+        
+#        if sort == 'max':
+#            return data.round(2).style.highlight_max(axis=1, color='#CCCCFF').format(f)
+#        else:
+#            return data.round(2).style.highlight_min(axis=1, color='#CCCCFF').format(f)
